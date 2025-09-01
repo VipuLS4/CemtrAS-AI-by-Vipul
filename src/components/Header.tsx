@@ -71,10 +71,10 @@ export const Header: React.FC<HeaderProps> = ({ sidebarOpen, setSidebarOpen, sel
             </div>
 
             {/* User Info */}
-            {user ? (
+            {isAuthenticated && user ? (
               <div className="flex items-center gap-2">
                 <span className="text-sm font-semibold text-gray-900 dark:text-white hidden md:inline">
-                  {user.name}
+                  {user.fullName}
                 </span>
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center">
                   <User className="text-white" size={16} />
@@ -83,12 +83,12 @@ export const Header: React.FC<HeaderProps> = ({ sidebarOpen, setSidebarOpen, sel
             ) : (
               <div className="flex items-center gap-2">
                 <span className="text-sm font-semibold text-gray-900 dark:text-white hidden md:inline">
-                  Loading...
+                  Guest
                 </span>
                 <div className="w-8 h-8 rounded-full overflow-hidden">
                   <img 
-                    src="/untitled (10).jpeg"
-                    alt="User"
+                    src="/untitled (10).jpeg" 
+                    alt="Guest User"
                     className="w-full h-full object-cover"
                   />
                 </div>

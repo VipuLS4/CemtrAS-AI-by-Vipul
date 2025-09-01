@@ -84,17 +84,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </div>
 
           {/* User Profile */}
-          {user ? (
+          {isAuthenticated && user ? (
             <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-xl">
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center">
                 <User className="text-white" size={16} />
               </div>
               <div className="flex-1 min-w-0">
                 <h3 className="text-sm font-semibold text-gray-900 dark:text-white truncate">
-                  {user.name}
+                  {user.fullName}
                 </h3>
                 <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
-                  Premium Access
+                  {user.email}
                 </p>
               </div>
               <button
@@ -104,6 +104,24 @@ export const Sidebar: React.FC<SidebarProps> = ({
               >
                 <LogOut className="text-gray-400 hover:text-red-500" size={14} />
               </button>
+            </div>
+          ) : (
+            <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-xl">
+              <div className="w-10 h-10 rounded-full overflow-hidden">
+                <img 
+                  src="/untitled (10).jpeg" 
+                  alt="Guest User"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
+                  Vipul Sharma
+                </h3>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  Guest Mode
+                </p>
+              </div>
             </div>
           )}
         </div>
@@ -134,15 +152,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </button>
 
             {/* Chat History */}
-            <div>
-              <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">
-                Chat History
-              </h4>
-              <ChatHistoryList 
-                history={histories}
-                onSelect={onLoadChat}
-              />
-            </div>
+            {isAuthenticated && (
+              <div>
+                <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">
+                  Chat History
+                </h4>
+                <ChatHistoryList 
+                  history={histories}
+                  onSelect={onLoadChat}
+                />
+              </div>
+            )}
 
             {/* Stats */}
             <div className="space-y-3">
@@ -168,6 +188,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 </p>
               </div>
             </div>
+
+            {/* Guest Mode Notice */}
+            {!isAuthenticated && (
+              <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl p-3">
+                <p className="text-xs font-semibold text-yellow-800 dark:text-yellow-200 mb-1">
+                  GUEST MODE
+                </p>
+                <p className="text-xs text-yellow-700 dark:text-yellow-300">
+                  Login to save chats & access advanced features
+                </p>
+              </div>
+            )}
           </div>
         </div>
 

@@ -10,7 +10,7 @@ if (!API_KEY) {
 const genAI = new GoogleGenerativeAI(API_KEY);
 
 // System instruction for authenticated users (natural conversational AI)
-const getSystemInstruction = (role: UserRole | 'General AI'): string => {
+const getAuthenticatedSystemInstruction = (role: UserRole | 'General AI'): string => {
   if (role === 'General AI') {
     return `You are a helpful AI assistant. Provide natural, conversational responses to any questions across all topics and domains. Be informative, clear, and engaging. Respond naturally like ChatGPT but maintain professionalism.`;
   }
@@ -30,6 +30,86 @@ const getSystemInstruction = (role: UserRole | 'General AI'): string => {
   };
 
   return roleSpecificInstructions[role];
+};
+
+// System instruction for guest users (structured format)
+const getGuestSystemInstruction = (role: UserRole | 'General AI'): string => {
+  if (role === 'General AI') {
+    return `You are a helpful AI assistant. Provide accurate, helpful responses to any questions across all topics and domains. Be informative, clear, and engaging in your responses.`;
+  }
+
+  const baseInstruction = `
+You are CemtrAS AI by Vipul Sharma, AI-Driven Engineering for Cement Excellence.
+
+CRITICAL INSTRUCTION:
+- Do NOT include section headers (UI will render them).
+- Only provide the content for each section.
+- Avoid Markdown bold (**text**) or formatting, return clean plain text or bullet points.
+- Always follow this structure:
+
+Section 1 Content: Problem Understanding  
+Section 2 Content: Analysis / Best Practices  
+Section 3 Content: Actionable Recommendations  
+Section 4 Content: Compliance Notes (if relevant)  
+Section 5 Content: Cost & Efficiency Implications  
+
+Your expertise covers cement plant operations with authoritative but approachable tone.
+Use bullet points, numbered steps, or structured lists where helpful.
+Include specific technical parameters, temperatures, pressures, or measurements when relevant.
+`;
+
+  const roleSpecificInstructions = {
+    'Operations': `
+Focus on:
+- Machinery troubleshooting and diagnostics
+- Process optimization and efficiency improvements
+- Preventive and predictive maintenance strategies
+- Energy efficiency and sustainability measures
+- Operational safety and compliance protocols
+`,
+    'Project Management': `
+Focus on:
+- EPC project scheduling and milestone tracking
+- Resource planning and cost control strategies
+- Risk management and mitigation plans
+- Erection and commissioning coordination
+- Progress monitoring and reporting systems
+`,
+    'Sales & Marketing': `
+Focus on:
+- Cement market analysis and industry trends
+- Customer acquisition and retention strategies
+- Pricing optimization and competitive positioning
+- Distribution channel management
+- Brand development and market penetration
+`,
+    'Procurement': `
+Focus on:
+- Vendor identification and evaluation criteria
+- Strategic sourcing and negotiation tactics
+- Inventory optimization and supply chain efficiency
+- Import/export compliance and documentation
+- Cost-saving procurement strategies and vendor management
+`,
+    'Erection & Commissioning': `
+Focus on:
+- Installation sequencing and critical path planning
+- Manpower coordination and contractor management
+- Safety protocols and compliance during erection
+- Pre-commissioning checks and system testing
+- Commissioning procedures and performance validation
+`,
+    'Engineering & Design': `
+Focus on:
+- Process flow design and optimization
+- Plant layout and equipment arrangement
+- Equipment selection and technical specifications
+- Sustainability and green technology integration
+- Design standards and engineering best practices
+`
+  };
+
+  return baseInstruction + roleSpecificInstructions[role];
 };
 
 // Convert file to base64 for Gemini API
@@ -64,11 +144,13 @@ function cleanMarkdown(text: string): string {
 export const generateResponse = async (
   prompt: string, 
   role: UserRole | 'General AI', 
-  isAuthenticated: boolean = true, // Always authenticated now
+  isAuthenticated: boolean = false,
   files: FileUpload[] = []
 ): Promise<string> => {
   try {
-    const systemInstruction = getSystemInstruction(role);
+    const systemInstruction = isAuthenticated 
+      ? getAuthenticatedSystemInstruction(role)
+      : getGuestSystemInstruction(role);
 
     const model = genAI.getGenerativeModel({
       model: 'gemini-1.5-flash',
