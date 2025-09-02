@@ -175,54 +175,60 @@ function App() {
   }
 
   return (
-    <div className={`h-screen flex overflow-hidden ${isDarkMode ? 'dark' : ''}`}>
+    <div className={`h-screen flex overflow-hidden ${isDarkMode ? 'dark' : ''}`} role="application" aria-label="CemtrAS AI Application">
       <div className="h-full w-full flex bg-gray-50 dark:bg-gray-900">
         {/* Sidebar */}
-        <Sidebar
-          isOpen={sidebarOpen}
-          onClose={() => setSidebarOpen(false)}
-          selectedRole={chatState.selectedRole}
-          onRoleChange={handleRoleChange}
-          onLoadChat={handleLoadChat}
-          onNewChat={handleNewChat}
-          messageCount={chatState.messages.length}
-          isLoading={chatState.isLoading}
-        />
+        <aside role="complementary" aria-label="Navigation and chat controls">
+          <Sidebar
+            isOpen={sidebarOpen}
+            onClose={() => setSidebarOpen(false)}
+            selectedRole={chatState.selectedRole}
+            onRoleChange={handleRoleChange}
+            onLoadChat={handleLoadChat}
+            onNewChat={handleNewChat}
+            messageCount={chatState.messages.length}
+            isLoading={chatState.isLoading}
+          />
+        </aside>
 
         {/* Main Content */}
         <div className="flex-1 flex flex-col min-w-0">
           {/* Header */}
-          <Header
-            sidebarOpen={sidebarOpen}
-            setSidebarOpen={setSidebarOpen}
-            selectedRole={chatState.selectedRole}
-          />
+          <header role="banner">
+            <Header
+              sidebarOpen={sidebarOpen}
+              setSidebarOpen={setSidebarOpen}
+              selectedRole={chatState.selectedRole}
+            />
+          </header>
 
           {/* Messages Container - Scrollable */}
-          <div className="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-900">
+          <main role="main" aria-label="Chat conversation" className="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-900">
             <div className="p-4 space-y-4 min-h-full">
               {/* Error Display */}
               {error && (
-                <ErrorMessage 
-                  message={error} 
-                  onRetry={error.includes('GEMINI_API_KEY') ? undefined : clearError}
-                />
+                <div role="alert" aria-live="assertive">
+                  <ErrorMessage 
+                    message={error} 
+                    onRetry={error.includes('GEMINI_API_KEY') ? undefined : clearError}
+                  />
+                </div>
               )}
 
               {chatState.messages.length === 0 && !error ? (
-                <div className="text-center py-12">
+                <div className="text-center py-12" role="region" aria-label="Welcome message">
                   <div className="p-8 bg-gradient-to-br from-blue-600/10 to-blue-800/10 dark:from-blue-400/10 dark:to-blue-600/10 rounded-3xl w-32 h-32 mx-auto mb-8 flex items-center justify-center border-2 border-blue-200 dark:border-blue-800">
                     <Factory className="text-blue-600 dark:text-blue-400 w-16 h-16" />
                   </div>
-                  <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Welcome to CemtrAS AI</h3>
+                  <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Welcome to CemtrAS AI</h1>
                   <p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto text-lg leading-relaxed">
                     AI-powered Cement Plant Operations, Safety & Efficiency Expert — your trusted partner in building and optimizing world-class cement plants.
                     {isAuthenticated && <span className="text-green-600 dark:text-green-400 font-semibold"><br/>✅ You have access to General AI mode and chat history!</span>}
                   </p>
-                  <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 max-w-4xl mx-auto border border-gray-200 dark:border-gray-700 shadow-lg">
-                    <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-6">🔧 Available Expertise Areas:</h4>
+                  <section className="bg-white dark:bg-gray-800 rounded-2xl p-8 max-w-4xl mx-auto border border-gray-200 dark:border-gray-700 shadow-lg" aria-labelledby="expertise-areas">
+                    <h2 id="expertise-areas" className="text-xl font-bold text-gray-900 dark:text-white mb-6">🔧 Available Expertise Areas:</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm">
-                      <div className="text-left space-y-3">
+                      <div className="text-left space-y-3" role="list" aria-label="Primary expertise areas">
                         <div className="flex items-center gap-3">
                           <div className="w-3 h-3 bg-yellow-500 rounded-full flex-shrink-0"></div>
                           <p className="text-gray-700 dark:text-gray-300 font-semibold">Plant Operations & Maintenance</p>
@@ -236,7 +242,7 @@ function App() {
                           <p className="text-gray-700 dark:text-gray-300 font-semibold">Sales & Marketing</p>
                         </div>
                       </div>
-                      <div className="text-left space-y-3">
+                      <div className="text-left space-y-3" role="list" aria-label="Secondary expertise areas">
                         <div className="flex items-center gap-3">
                           <div className="w-3 h-3 bg-red-500 rounded-full flex-shrink-0"></div>
                           <p className="text-gray-700 dark:text-gray-300 font-semibold">Procurement & Supply Chain</p>
@@ -251,7 +257,7 @@ function App() {
                         </div>
                       </div>
                       {isAuthenticated && (
-                        <div className="text-left space-y-3 sm:col-span-2">
+                        <div className="text-left space-y-3 sm:col-span-2" role="list" aria-label="Premium features">
                           <div className="flex items-center gap-3">
                             <div className="w-3 h-3 bg-purple-500 rounded-full flex-shrink-0"></div>
                             <p className="text-gray-700 dark:text-gray-300 font-semibold">🤖 General AI Assistant</p>
@@ -260,28 +266,28 @@ function App() {
                       )}
                     </div>
                     {!isAuthenticated && (
-                      <div className="mt-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl">
+                      <div className="mt-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl" role="note" aria-label="Login benefits">
                         <p className="text-yellow-800 dark:text-yellow-200 font-semibold text-sm">
                           🔓 Login to unlock General AI mode, file uploads, and chat history!
                         </p>
                       </div>
                     )}
-                  </div>
+                  </section>
                 </div>
               ) : (
-                <>
+                <div role="log" aria-live="polite" aria-label="Chat messages">
                   {chatState.messages.map((message) => (
                     <ChatMessage key={message.id} message={message} />
                   ))}
                   {chatState.isLoading && <LoadingMessage />}
-                </>
+                </div>
               )}
               <div ref={messagesEndRef} />
             </div>
-          </div>
+          </main>
 
           {/* Input Area - Fixed at Bottom */}
-          <div className="border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 flex-shrink-0">
+          <section role="region" aria-label="Message input" className="border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 flex-shrink-0">
             <ChatInput 
               onSend={handleSendMessage}
               isLoading={chatState.isLoading || !!error}
@@ -290,7 +296,7 @@ function App() {
               uploadedFiles={chatState.uploadedFiles}
               onRemoveFile={isAuthenticated ? handleRemoveFile : undefined}
             />
-          </div>
+          </section>
         </div>
       </div>
     </div>

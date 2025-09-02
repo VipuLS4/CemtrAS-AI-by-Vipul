@@ -72,7 +72,7 @@ export const RoleSelector: React.FC<RoleSelectorProps> = ({ selectedRole, onRole
   const { isAuthenticated } = useAuth();
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2" role="radiogroup" aria-label="Select expertise area">
       {roles
         .filter(role => !role.requiresAuth || isAuthenticated)
         .map((role) => (
@@ -84,6 +84,9 @@ export const RoleSelector: React.FC<RoleSelectorProps> = ({ selectedRole, onRole
                 ? `${role.color} shadow-md`
                 : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
             }`}
+            role="radio"
+            aria-checked={selectedRole === role.value}
+            aria-label={`${role.label}: ${role.description}`}
           >
             <div className={`p-1 rounded ${selectedRole === role.value ? 'bg-white/20' : 'bg-gray-200 dark:bg-gray-700'} flex-shrink-0`}>
               {role.icon}

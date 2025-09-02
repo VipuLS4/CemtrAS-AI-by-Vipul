@@ -159,12 +159,12 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
   };
   
   return (
-    <div className={`flex gap-4 ${isUser ? 'flex-row-reverse' : 'flex-row'} mb-6`}>
+    <div className={`flex gap-4 ${isUser ? 'flex-row-reverse' : 'flex-row'} mb-6`} role="article" aria-label={`Message from ${isUser ? 'user' : 'CemtrAS AI'}`}>
       <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center shadow-lg ${
         isUser 
           ? 'bg-gradient-to-br from-blue-600 to-blue-800' 
           : 'bg-gradient-to-br from-gray-700 to-gray-900 dark:from-gray-600 dark:to-gray-800'
-      }`}>
+      }`} aria-label={`${isUser ? 'User' : 'AI Assistant'} avatar`}>
         {isUser ? <User size={16} className="text-white" /> : <Bot size={16} className="text-white" />}
       </div>
       
@@ -173,7 +173,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
           isUser
             ? 'bg-gradient-to-br from-blue-600 to-blue-800 text-white rounded-xl sm:rounded-2xl rounded-br-md'
             : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 rounded-xl rounded-bl-md'
-        }`}>
+        }`} role="region" aria-label="Message content">
           <div className="text-sm leading-relaxed">
             {isUser ? (
               <div className="space-y-2">
@@ -187,7 +187,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
             )}
           </div>
         </div>
-        <div className={`text-xs text-gray-500 dark:text-gray-400 mt-2 font-medium ${isUser ? 'text-right' : 'text-left'}`}>
+        <div className={`text-xs text-gray-500 dark:text-gray-400 mt-2 font-medium ${isUser ? 'text-right' : 'text-left'}`} role="note" aria-label="Message metadata">
           {isUser ? 'YOU' : 'CemtrAS AI'} • {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
         </div>
       </div>

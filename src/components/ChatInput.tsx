@@ -91,14 +91,15 @@ export const ChatInput: React.FC<ChatInputProps> = ({
   };
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-3" role="region" aria-label="Message composition">
       {/* Uploaded Files Display */}
       {isAuthenticated && uploadedFiles.length > 0 && (
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2" role="list" aria-label="Uploaded files">
           {uploadedFiles.map((file) => (
             <div
               key={file.id}
               className="flex items-center gap-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg px-3 py-2"
+              role="listitem"
             >
               <span className="text-sm font-medium text-blue-700 dark:text-blue-300 truncate max-w-32">
                 {file.name}
@@ -106,6 +107,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
               <button
                 onClick={() => onRemoveFile(file.id)}
                 className="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-200"
+                aria-label={`Remove file ${file.name}`}
               >
                 <X size={14} />
               </button>
@@ -114,7 +116,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="flex gap-3">
+      <form onSubmit={handleSubmit} className="flex gap-3" role="search" aria-label="Send message">
         <div 
           className={`flex-1 relative ${isDragOver ? 'ring-2 ring-blue-500 ring-opacity-50' : ''}`}
           onDragOver={handleDragOver}
@@ -132,7 +134,12 @@ export const ChatInput: React.FC<ChatInputProps> = ({
                      disabled:opacity-50 disabled:cursor-not-allowed
                      text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 text-sm
                      transition-all duration-200"
+            aria-label="Type your message"
+            aria-describedby="message-help"
           />
+          <div id="message-help" className="sr-only">
+            Type your question about cement plant operations and press Enter or click Send
+          </div>
           
           {/* File Upload Button (Authenticated Users Only) */}
           {isAuthenticated && (
@@ -148,7 +155,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
               <label
                 htmlFor="file-upload"
                 className="absolute right-16 top-1/2 transform -translate-y-1/2 p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors cursor-pointer"
-                title="Upload files (PDF, Images)"
+                aria-label="Upload files (PDF, Images)"
               >
                 <Paperclip size={16} />
               </label>
@@ -158,6 +165,8 @@ export const ChatInput: React.FC<ChatInputProps> = ({
           <button
             type="button"
             className="absolute right-4 top-1/2 transform -translate-y-1/2 p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+            aria-label="Voice input (coming soon)"
+            disabled
           >
             <Mic size={16} />
           </button>
@@ -171,6 +180,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
                    disabled:opacity-50 disabled:cursor-not-allowed
                    transition-all duration-200 flex items-center gap-2 
                    font-semibold text-sm"
+          aria-label="Send message"
         >
           <Send size={16} />
           <span className="hidden sm:inline">Send</span>

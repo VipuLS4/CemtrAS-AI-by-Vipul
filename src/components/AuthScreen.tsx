@@ -131,7 +131,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onComplete }) => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-400 via-gray-500 to-gray-600 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-400 via-gray-500 to-gray-600 flex items-center justify-center p-6" role="main">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-20 left-20 w-32 h-32 border-4 border-yellow-500 rounded-full"></div>
@@ -141,7 +141,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onComplete }) => {
 
       <div className="max-w-md w-full relative z-10">
         {/* Header */}
-        <div className="text-center mb-8">
+        <header className="text-center mb-8" role="banner">
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="p-3 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl shadow-lg">
               <Factory className="text-white" size={32} />
@@ -154,14 +154,16 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onComplete }) => {
               />
             </div>
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2"> CemtrAS AI</h1>
+          <h1 className="text-3xl font-bold text-white mb-2" id="auth-title"> CemtrAS AI</h1>
           <p className="text-slate-300">Secure access to your technical AI assistant</p>
-        </div>
+        </header>
 
         {/* Auth Form Card */}
-        <div className="bg-white rounded-2xl shadow-2xl border-4 border-slate-200 overflow-hidden">
+        <section className="bg-white rounded-2xl shadow-2xl border-4 border-slate-200 overflow-hidden" aria-labelledby="auth-form-heading">
+          <h2 id="auth-form-heading" className="sr-only">{isLogin ? 'Login Form' : 'Registration Form'}</h2>
+          
           {/* Tab Headers */}
-          <div className="flex">
+          <div className="flex" role="tablist" aria-label="Authentication mode">
             <button
               onClick={() => setIsLogin(true)}
               className={`flex-1 py-4 px-6 font-bold text-lg transition-all duration-300 ${
@@ -169,6 +171,10 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onComplete }) => {
                   ? 'bg-gradient-to-r from-blue-600 to-blue-800 text-white' 
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
+              role="tab"
+              aria-selected={isLogin}
+              aria-controls="login-panel"
+              id="login-tab"
             >
               <LogIn className="inline mr-2" size={20} />
               Login
@@ -180,6 +186,10 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onComplete }) => {
                   ? 'bg-gradient-to-r from-yellow-500 to-yellow-600 text-white' 
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
+              role="tab"
+              aria-selected={!isLogin}
+              aria-controls="register-panel"
+              id="register-tab"
             >
               <UserPlus className="inline mr-2" size={20} />
               Register
@@ -187,15 +197,15 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onComplete }) => {
           </div>
 
           {/* Form Content */}
-          <div className="p-8">
+          <div className="p-8" role="tabpanel" aria-labelledby={isLogin ? 'login-tab' : 'register-tab'} id={isLogin ? 'login-panel' : 'register-panel'}>
             {/* Error Display */}
             {error && (
-              <div className="bg-red-50 border-2 border-red-200 rounded-xl p-3 mb-6 text-center">
+              <div className="bg-red-50 border-2 border-red-200 rounded-xl p-3 mb-6 text-center" role="alert" aria-live="assertive">
                 <p className="text-red-700 font-semibold text-sm">{error}</p>
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6" aria-label={isLogin ? 'Login form' : 'Registration form'}>
               {/* Register Fields */}
               {!isLogin && (
                 <div className="relative">
@@ -208,6 +218,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onComplete }) => {
                     onChange={handleInputChange}
                     className="w-full pl-12 pr-4 py-3 border-2 border-slate-300 rounded-xl focus:border-yellow-500 focus:outline-none transition-colors font-semibold"
                     required={!isLogin}
+                    aria-label="Full name"
                   />
                 </div>
               )}
@@ -223,6 +234,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onComplete }) => {
                   onChange={handleInputChange}
                   className="w-full pl-12 pr-4 py-3 border-2 border-slate-300 rounded-xl focus:border-blue-500 focus:outline-none transition-colors font-semibold"
                   required
+                  aria-label="Email address"
                 />
               </div>
 
@@ -238,6 +250,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onComplete }) => {
                     onChange={handleInputChange}
                     className="w-full pl-12 pr-4 py-3 border-2 border-slate-300 rounded-xl focus:border-yellow-500 focus:outline-none transition-colors font-semibold"
                     required={!isLogin}
+                    aria-label="Mobile number"
                   />
                 </div>
               )}
@@ -253,11 +266,13 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onComplete }) => {
                   onChange={handleInputChange}
                   className="w-full pl-12 pr-12 py-3 border-2 border-slate-300 rounded-xl focus:border-blue-500 focus:outline-none transition-colors font-semibold"
                   required
+                  aria-label="Password"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
@@ -279,11 +294,14 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onComplete }) => {
                         : 'border-slate-300 focus:border-yellow-500'
                     }`}
                     required={!isLogin}
+                    aria-label="Confirm password"
+                    aria-describedby={formData.password && formData.confirmPassword && formData.password !== formData.confirmPassword ? 'password-mismatch' : undefined}
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                    aria-label={showConfirmPassword ? 'Hide confirm password' : 'Show confirm password'}
                   >
                     {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
@@ -292,7 +310,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onComplete }) => {
 
               {/* Password Mismatch Warning */}
               {!isLogin && formData.password && formData.confirmPassword && formData.password !== formData.confirmPassword && (
-                <div className="text-red-600 text-sm font-semibold">
+                <div id="password-mismatch" className="text-red-600 text-sm font-semibold" role="alert" aria-live="polite">
                   Passwords do not match
                 </div>
               )}
@@ -323,6 +341,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onComplete }) => {
                     ? 'bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white'
                     : 'bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white'
                 } disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3`}
+                aria-label={isLogin ? 'Login with OTP verification' : 'Register with OTP verification'}
               >
                 {isLoading ? (
                   <>
@@ -343,6 +362,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onComplete }) => {
                   <button
                     type="button"
                     className="text-blue-600 hover:text-blue-800 font-semibold text-sm transition-colors"
+                    aria-label="Forgot password assistance"
                   >
                     Forgot Password?
                   </button>
@@ -350,18 +370,19 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onComplete }) => {
               )}
             </form>
           </div>
-        </div>
+        </section>
 
         {/* Back Button */}
-        <div className="text-center mt-6">
+        <nav className="text-center mt-6">
           <button
             onClick={() => window.location.reload()}
             className="text-white hover:text-yellow-400 font-semibold transition-colors flex items-center justify-center gap-2 mx-auto"
+            aria-label="Go back to access choice screen"
           >
             <ArrowLeft size={20} />
             Back to Access Choice
           </button>
-        </div>
+        </nav>
       </div>
     </div>
   );
