@@ -1,5 +1,5 @@
 import React from 'react';
-import { User, Bot, AlertTriangle, CheckCircle, Info, Target, BarChart3, Lightbulb, Shield, FileText, Image } from 'lucide-react';
+import { User, Bot, AlertTriangle, CheckCircle, Info, Target, BarChart3, Lightbulb, Shield, FileText, Image, Paperclip } from 'lucide-react';
 import type { Message, FileUpload } from '../types';
 import { useAuth } from '../contexts/AuthContext';
 
