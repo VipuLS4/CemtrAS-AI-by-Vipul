@@ -72,7 +72,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
               <li className="flex items-center gap-3">
                 <FileText className="text-purple-600 w-5 h-5" />
                 <span className="text-slate-700 font-semibold">
-                  Personalized plant recommendations
+                  📎 Upload PDF & image files for analysis
                 </span>
               </li>
             </ul>

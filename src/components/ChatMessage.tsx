@@ -138,24 +138,51 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
     if (!files || files.length === 0) return null;
 
     return (
-      <div className="mt-3 space-y-2">
+      <div className="mt-3 space-y-2" role="region" aria-label="Attached files">
+        <div className="text-xs font-semibold text-blue-200 mb-2 flex items-center gap-1">
+          <Paperclip size={12} />
+          Attached Files:
+        </div>
         {files.map((file) => (
           <div key={file.id} className="flex items-center gap-2 bg-gray-100 dark:bg-gray-700 rounded-lg p-2">
-            {file.type.startsWith('image/') ? (
-              <Image className="text-blue-500" size={16} />
-            ) : (
-              <FileText className="text-red-500" size={16} />
+            <div className="flex-shrink-0">
+              {file.type.startsWith('image/') ? (
+                <Image className="text-blue-600" size={18} />
+              ) : file.type === 'application/pdf' ? (
+                <FileText className="text-red-600" size={18} />
+              ) : (
+                <FileText className="text-gray-600" size={18} />
+              )}
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="text-sm font-semibold text-blue-800 truncate">
+                {file.name}
+              </div>
+              <div className="text-xs text-blue-600">
+                {formatFileSize(file.size)} • {file.type.split('/')[1].toUpperCase()}
+              </div>
+            </div>
+            {file.type.startsWith('image/') && (
+              <div className="w-8 h-8 rounded border border-blue-300 overflow-hidden bg-white">
+                <img 
+                  src={file.content as string} 
+                  alt={`Preview of ${file.name}`}
+                  className="w-full h-full object-cover"
+                />
+              </div>
             )}
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300 truncate">
-              {file.name}
-            </span>
-            <span className="text-xs text-gray-500 dark:text-gray-400">
-              ({(file.size / 1024).toFixed(1)} KB)
-            </span>
           </div>
         ))}
       </div>
     );
+  };
+
+  const formatFileSize = (bytes: number): string => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
   };
   
   return (
