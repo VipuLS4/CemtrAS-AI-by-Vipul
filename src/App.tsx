@@ -223,7 +223,7 @@ function App() {
                   <h1 className="text-4xl font-extrabold text-slate-800 dark:text-white mb-4 tracking-tight">Welcome to CemtrAS AI</h1>
                   <p className="text-slate-600 dark:text-slate-300 mb-6 max-w-2xl mx-auto text-lg leading-relaxed">
                     AI-powered EPC Project Operations, Safety & Efficiency Expert — your trusted partner across cement, power, oil & gas, metals & mining, chemicals, renewable energy, and infrastructure projects.
-                    {isAuthenticated && <span className="text-green-600 dark:text-green-400 font-semibold"><br/>You have access to General AI mode and chat history!</span>}
+                    {isAuthenticated && <span className="text-emerald-600 dark:text-emerald-400 font-semibold"><br/>You have access to chat history and file uploads!</span>}
                   </p>
                   {/* Industry pill badges */}
                   <div className="flex flex-wrap justify-center gap-2 mb-8 max-w-2xl mx-auto">
@@ -273,19 +273,17 @@ function App() {
                           <p className="text-slate-700 dark:text-slate-300 font-semibold">Engineering & Design</p>
                         </div>
                       </div>
-                      {isAuthenticated && (
-                        <div className="text-left space-y-3 sm:col-span-2" role="list" aria-label="Premium features">
-                          <div className="flex items-center gap-3">
-                            <div className="w-3 h-3 bg-violet-500 rounded-full flex-shrink-0"></div>
-                            <p className="text-slate-700 dark:text-slate-300 font-semibold">General AI Assistant</p>
-                          </div>
+                      <div className="text-left space-y-3 sm:col-span-2" role="list" aria-label="General features">
+                        <div className="flex items-center gap-3">
+                          <div className="w-3 h-3 bg-violet-500 rounded-full flex-shrink-0"></div>
+                          <p className="text-slate-700 dark:text-slate-300 font-semibold">General AI Assistant</p>
                         </div>
-                      )}
+                      </div>
                     </div>
                     {!isAuthenticated && (
                       <div className="mt-6 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl" role="note" aria-label="Login benefits">
                         <p className="text-amber-800 dark:text-amber-200 font-semibold text-sm">
-                          Login to unlock General AI mode, file uploads, and chat history!
+                          Login to unlock file uploads and chat history!
                         </p>
                       </div>
                     )}

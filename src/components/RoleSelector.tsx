@@ -100,7 +100,6 @@ const roles: RoleConfig[] = [
     label: 'General AI Assistant',
     icon: <Bot size={18} />,
     description: 'General purpose AI for any questions',
-    requiresAuth: true,
     accent: 'violet',
     selectedBg: 'bg-violet-50 dark:bg-violet-900/30',
     selectedText: 'text-violet-700 dark:text-violet-300',
