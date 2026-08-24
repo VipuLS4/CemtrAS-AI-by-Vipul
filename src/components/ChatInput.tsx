@@ -175,10 +175,10 @@ export const ChatInput: React.FC<ChatInputProps> = ({
 
       {/* Uploaded Files Display */}
       {isAuthenticated && uploadedFiles.length > 0 && (
-        <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700" role="region" aria-label="Uploaded files">
+        <div className="bg-slate-50 dark:bg-slate-800 rounded-xl p-4 border border-slate-200 dark:border-slate-700" role="region" aria-label="Uploaded files">
           <div className="flex items-center gap-2 mb-3">
-            <Upload className="text-blue-500" size={16} />
-            <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+            <Upload className="text-blue-600" size={16} />
+            <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">
               Uploaded Files ({uploadedFiles.length})
             </span>
           </div>
@@ -186,17 +186,17 @@ export const ChatInput: React.FC<ChatInputProps> = ({
             {uploadedFiles.map((file) => (
               <div
                 key={file.id}
-                className="flex items-center gap-3 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-3 hover:shadow-sm transition-shadow"
+                className="flex items-center gap-3 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg p-3 hover:shadow-sm transition-shadow"
                 role="listitem"
               >
                 <div className="flex-shrink-0">
                   {getFileIcon(file.type)}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                  <div className="text-sm font-medium text-slate-900 dark:text-white truncate">
                     {file.name}
                   </div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                  <div className="text-xs text-slate-500 dark:text-slate-400">
                     {formatFileSize(file.size)} • {file.type.split('/')[1].toUpperCase()}
                   </div>
                 </div>
@@ -219,9 +219,9 @@ export const ChatInput: React.FC<ChatInputProps> = ({
       {isAuthenticated && uploadedFiles.length === 0 && (
         <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4" role="note" aria-label="File upload instructions">
           <div className="flex items-start gap-3">
-            <Upload className="text-blue-500 flex-shrink-0 mt-0.5" size={16} />
+            <Upload className="text-blue-600 flex-shrink-0 mt-0.5" size={16} />
             <div className="text-sm text-blue-700 dark:text-blue-300">
-              <p className="font-semibold mb-1">📎 Upload Files for Analysis</p>
+              <p className="font-semibold mb-1">Upload Files for Analysis</p>
               <p className="text-xs">
                 Drag & drop or click to upload PDF documents, JPG/PNG images (max 10MB each)
               </p>
@@ -243,18 +243,18 @@ export const ChatInput: React.FC<ChatInputProps> = ({
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder={placeholder || "Ask about your cement plant challenge or upload files for analysis..."}
+            placeholder={placeholder || "Ask about your EPC project or upload files for analysis..."}
             disabled={isLoading}
-            className="w-full px-4 py-3 pr-20 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl
-                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+            className="w-full px-4 py-3 pr-20 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-xl
+                     focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600
                      disabled:opacity-50 disabled:cursor-not-allowed
-                     text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 text-sm
+                     text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 text-sm
                      transition-all duration-200"
             aria-label="Type your message"
             aria-describedby="message-help"
           />
           <div id="message-help" className="sr-only">
-            Type your question about cement plant operations or upload files for analysis. Press Enter or click Send to submit.
+            Type your question about your EPC project or upload files for analysis. Press Enter or click Send to submit.
           </div>
           
           {/* File Upload Button (Authenticated Users Only) */}
@@ -274,7 +274,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
               </div>
               <label
                 htmlFor="file-upload"
-                className="absolute right-12 top-1/2 transform -translate-y-1/2 p-2 text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+                className="absolute right-12 top-1/2 transform -translate-y-1/2 p-2 text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700"
                 aria-label="Upload PDF or image files for analysis"
                 title="Upload PDF or image files"
               >
@@ -285,7 +285,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
           
           <button
             type="button"
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700"
             aria-label="Voice input (coming soon)"
             title="Voice input (coming soon)"
             disabled
@@ -298,7 +298,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
           type="submit"
           disabled={!input.trim() || isLoading}
           className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl 
-                   focus:outline-none focus:ring-2 focus:ring-blue-500 
+                   focus:outline-none focus:ring-2 focus:ring-blue-600 
                    disabled:opacity-50 disabled:cursor-not-allowed
                    transition-all duration-200 flex items-center gap-2 
                    font-semibold text-sm shadow-lg hover:shadow-xl"
@@ -328,11 +328,11 @@ export const ChatInput: React.FC<ChatInputProps> = ({
 
       {/* File Upload Help for Guest Users */}
       {!isAuthenticated && (
-        <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl p-3" role="note" aria-label="File upload limitation">
+        <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-3" role="note" aria-label="File upload limitation">
           <div className="flex items-center gap-2">
-            <Paperclip className="text-yellow-600" size={16} />
-            <span className="text-yellow-800 dark:text-yellow-200 text-sm font-semibold">
-              📎 Login to upload PDF documents and images for AI analysis
+            <Paperclip className="text-amber-600" size={16} />
+            <span className="text-amber-800 dark:text-amber-200 text-sm font-semibold">
+              Login to upload PDF documents and images for AI analysis
             </span>
           </div>
         </div>

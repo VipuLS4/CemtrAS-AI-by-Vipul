@@ -15,33 +15,33 @@ export const Header: React.FC<HeaderProps> = ({ sidebarOpen, setSidebarOpen, sel
   const { isDarkMode, toggleDarkMode } = useTheme();
 
   return (
-    <div className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 p-4 shadow-sm flex-shrink-0" role="banner">
+    <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 p-4 shadow-sm flex-shrink-0" role="banner">
       <div className="flex items-center justify-between">
         {/* Left Section */}
         <div className="flex items-center gap-3" role="group" aria-label="Application branding">
           {/* Mobile/Tablet Menu Toggle */}
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="lg:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+            className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
             aria-label={sidebarOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={sidebarOpen}
             aria-controls="sidebar-navigation"
           >
             {sidebarOpen ? (
-              <X className="text-gray-700 dark:text-gray-300" size={24} />
+              <X className="text-slate-700 dark:text-slate-300" size={24} />
             ) : (
-              <Menu className="text-gray-700 dark:text-gray-300" size={24} />
+              <Menu className="text-slate-700 dark:text-slate-300" size={24} />
             )}
           </button>
 
           {/* App Title */}
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl shadow-lg">
+            <div className="p-2 bg-gradient-to-br from-slate-700 to-blue-900 rounded-xl shadow-lg">
               <Factory className="text-white" size={20} />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900 dark:text-white" id="app-title">CemtrAS AI</h1>
-              <p className="text-sm text-blue-600 dark:text-blue-400 font-semibold">
+              <h1 className="text-xl font-bold text-slate-900 dark:text-white" id="app-title">CemtrAS AI</h1>
+              <p className="text-sm text-blue-700 dark:text-blue-400 font-semibold">
                 {selectedRole} Expert
               </p>
             </div>
@@ -53,13 +53,13 @@ export const Header: React.FC<HeaderProps> = ({ sidebarOpen, setSidebarOpen, sel
           {/* Dark Mode Toggle */}
           <button
             onClick={toggleDarkMode}
-            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
             aria-label={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
           >
             {isDarkMode ? (
-              <Sun className="text-yellow-500" size={20} />
+              <Sun className="text-amber-500" size={20} />
             ) : (
-              <Moon className="text-gray-600" size={20} />
+              <Moon className="text-slate-600" size={20} />
             )}
           </button>
 
@@ -68,7 +68,7 @@ export const Header: React.FC<HeaderProps> = ({ sidebarOpen, setSidebarOpen, sel
             {/* Status Indicator */}
             <div className="flex items-center gap-2" role="status" aria-label="Connection status">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="text-sm font-semibold text-gray-700 dark:text-gray-300 hidden sm:inline">
+              <span className="text-sm font-semibold text-slate-700 dark:text-slate-300 hidden sm:inline">
                 Online
               </span>
             </div>
@@ -76,16 +76,16 @@ export const Header: React.FC<HeaderProps> = ({ sidebarOpen, setSidebarOpen, sel
             {/* User Info */}
             {isAuthenticated && user ? (
               <div className="flex items-center gap-2" role="group" aria-label="User profile">
-                <span className="text-sm font-semibold text-gray-900 dark:text-white hidden md:inline">
+                <span className="text-sm font-semibold text-slate-900 dark:text-white hidden md:inline">
                   {user.fullName}
                 </span>
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center" aria-label={`${user.fullName} profile`}>
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-slate-700 to-blue-900 flex items-center justify-center" aria-label={`${user.fullName} profile`}>
                   <User className="text-white" size={16} />
                 </div>
               </div>
             ) : (
               <div className="flex items-center gap-2" role="group" aria-label="Guest user profile">
-                <span className="text-sm font-semibold text-gray-900 dark:text-white hidden md:inline">
+                <span className="text-sm font-semibold text-slate-900 dark:text-white hidden md:inline">
                   Guest
                 </span>
                 <div className="w-8 h-8 rounded-full overflow-hidden" aria-label="Guest user avatar">

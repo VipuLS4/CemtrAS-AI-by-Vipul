@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Factory } from 'lucide-react';
+import { Factory, Building2, Zap, Flame, Mountain, FlaskConical, Wind, HardHat } from 'lucide-react';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
 import { ChatMessage } from './components/ChatMessage';
@@ -15,7 +15,7 @@ import { generateResponse } from './utils/gemini';
 import type { Message, UserRole, ChatState, ChatHistory } from './types';
 
 function App() {
-  const { user, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const { saveChatHistory, loadChatHistory, setCurrentChatId } = useChatHistory();
   const { isDarkMode } = useTheme();
   const [showLogin, setShowLogin] = useState(true);
@@ -176,7 +176,7 @@ function App() {
 
   return (
     <div className={`h-screen flex overflow-hidden ${isDarkMode ? 'dark' : ''}`} role="application" aria-label="CemtrAS AI Application">
-      <div className="h-full w-full flex bg-gray-50 dark:bg-gray-900">
+      <div className="h-full w-full flex bg-slate-50 dark:bg-slate-900">
         {/* Sidebar */}
         <aside role="complementary" aria-label="Navigation and chat controls">
           <Sidebar
@@ -203,7 +203,7 @@ function App() {
           </header>
 
           {/* Messages Container - Scrollable */}
-          <main role="main" aria-label="Chat conversation" className="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-900">
+          <main role="main" aria-label="Chat conversation" className="flex-1 overflow-y-auto bg-slate-50 dark:bg-slate-900">
             <div className="p-4 space-y-4 min-h-full">
               {/* Error Display */}
               {error && (
@@ -216,59 +216,76 @@ function App() {
               )}
 
               {chatState.messages.length === 0 && !error ? (
-                <div className="text-center py-12" role="region" aria-label="Welcome message">
-                  <div className="p-8 bg-gradient-to-br from-blue-600/10 to-blue-800/10 dark:from-blue-400/10 dark:to-blue-600/10 rounded-3xl w-32 h-32 mx-auto mb-8 flex items-center justify-center border-2 border-blue-200 dark:border-blue-800">
-                    <Factory className="text-blue-600 dark:text-blue-400 w-16 h-16" />
+                <div className="text-center py-12 animate-fade-in" role="region" aria-label="Welcome message">
+                  <div className="p-8 bg-gradient-to-br from-slate-700/10 to-blue-900/10 dark:from-slate-500/10 dark:to-blue-700/10 rounded-3xl w-32 h-32 mx-auto mb-8 flex items-center justify-center border-2 border-slate-300 dark:border-slate-600 shadow-lg">
+                    <Factory className="text-slate-700 dark:text-slate-300 w-16 h-16" />
                   </div>
-                  <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Welcome to CemtrAS AI</h1>
-                  <p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto text-lg leading-relaxed">
-                    AI-powered Cement Plant Operations, Safety & Efficiency Expert — your trusted partner in building and optimizing world-class cement plants.
-                    {isAuthenticated && <span className="text-green-600 dark:text-green-400 font-semibold"><br/>✅ You have access to General AI mode and chat history!</span>}
+                  <h1 className="text-4xl font-extrabold text-slate-800 dark:text-white mb-4 tracking-tight">Welcome to CemtrAS AI</h1>
+                  <p className="text-slate-600 dark:text-slate-300 mb-6 max-w-2xl mx-auto text-lg leading-relaxed">
+                    AI-powered EPC Project Operations, Safety & Efficiency Expert — your trusted partner across cement, power, oil & gas, metals & mining, chemicals, renewable energy, and infrastructure projects.
+                    {isAuthenticated && <span className="text-green-600 dark:text-green-400 font-semibold"><br/>You have access to General AI mode and chat history!</span>}
                   </p>
-                  <section className="bg-white dark:bg-gray-800 rounded-2xl p-8 max-w-4xl mx-auto border border-gray-200 dark:border-gray-700 shadow-lg" aria-labelledby="expertise-areas">
-                    <h2 id="expertise-areas" className="text-xl font-bold text-gray-900 dark:text-white mb-6">🔧 Available Expertise Areas:</h2>
+                  {/* Industry pill badges */}
+                  <div className="flex flex-wrap justify-center gap-2 mb-8 max-w-2xl mx-auto">
+                    {[
+                      { label: 'Cement', icon: <Factory size={12} /> },
+                      { label: 'Power', icon: <Zap size={12} /> },
+                      { label: 'Oil & Gas', icon: <Flame size={12} /> },
+                      { label: 'Metals & Mining', icon: <Mountain size={12} /> },
+                      { label: 'Chemicals', icon: <FlaskConical size={12} /> },
+                      { label: 'Renewable Energy', icon: <Wind size={12} /> },
+                      { label: 'Infrastructure', icon: <HardHat size={12} /> },
+                    ].map((ind) => (
+                      <span key={ind.label} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 text-xs font-semibold">
+                        {ind.icon}
+                        {ind.label}
+                      </span>
+                    ))}
+                  </div>
+                  <section className="bg-white dark:bg-gray-800 rounded-2xl p-8 max-w-4xl mx-auto border border-slate-200 dark:border-slate-700 shadow-lg" aria-labelledby="expertise-areas">
+                    <h2 id="expertise-areas" className="text-xl font-bold text-slate-800 dark:text-white mb-6">Available Expertise Areas</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm">
                       <div className="text-left space-y-3" role="list" aria-label="Primary expertise areas">
                         <div className="flex items-center gap-3">
-                          <div className="w-3 h-3 bg-yellow-500 rounded-full flex-shrink-0"></div>
-                          <p className="text-gray-700 dark:text-gray-300 font-semibold">Plant Operations & Maintenance</p>
+                          <div className="w-3 h-3 bg-amber-500 rounded-full flex-shrink-0"></div>
+                          <p className="text-slate-700 dark:text-slate-300 font-semibold">Plant Operations & Maintenance</p>
                         </div>
                         <div className="flex items-center gap-3">
-                          <div className="w-3 h-3 bg-blue-500 rounded-full flex-shrink-0"></div>
-                          <p className="text-gray-700 dark:text-gray-300 font-semibold">Project Management</p>
+                          <div className="w-3 h-3 bg-blue-600 rounded-full flex-shrink-0"></div>
+                          <p className="text-slate-700 dark:text-slate-300 font-semibold">Project Management</p>
                         </div>
                         <div className="flex items-center gap-3">
-                          <div className="w-3 h-3 bg-green-500 rounded-full flex-shrink-0"></div>
-                          <p className="text-gray-700 dark:text-gray-300 font-semibold">Sales & Marketing</p>
+                          <div className="w-3 h-3 bg-emerald-500 rounded-full flex-shrink-0"></div>
+                          <p className="text-slate-700 dark:text-slate-300 font-semibold">Sales & Marketing</p>
                         </div>
                       </div>
                       <div className="text-left space-y-3" role="list" aria-label="Secondary expertise areas">
                         <div className="flex items-center gap-3">
-                          <div className="w-3 h-3 bg-red-500 rounded-full flex-shrink-0"></div>
-                          <p className="text-gray-700 dark:text-gray-300 font-semibold">Procurement & Supply Chain</p>
+                          <div className="w-3 h-3 bg-rose-500 rounded-full flex-shrink-0"></div>
+                          <p className="text-slate-700 dark:text-slate-300 font-semibold">Procurement & Supply Chain</p>
                         </div>
                         <div className="flex items-center gap-3">
-                          <div className="w-3 h-3 bg-purple-500 rounded-full flex-shrink-0"></div>
-                          <p className="text-gray-700 dark:text-gray-300 font-semibold">Erection & Commissioning</p>
+                          <div className="w-3 h-3 bg-sky-500 rounded-full flex-shrink-0"></div>
+                          <p className="text-slate-700 dark:text-slate-300 font-semibold">Erection & Commissioning</p>
                         </div>
                         <div className="flex items-center gap-3">
                           <div className="w-3 h-3 bg-orange-500 rounded-full flex-shrink-0"></div>
-                          <p className="text-gray-700 dark:text-gray-300 font-semibold">Engineering & Design</p>
+                          <p className="text-slate-700 dark:text-slate-300 font-semibold">Engineering & Design</p>
                         </div>
                       </div>
                       {isAuthenticated && (
                         <div className="text-left space-y-3 sm:col-span-2" role="list" aria-label="Premium features">
                           <div className="flex items-center gap-3">
-                            <div className="w-3 h-3 bg-purple-500 rounded-full flex-shrink-0"></div>
-                            <p className="text-gray-700 dark:text-gray-300 font-semibold">🤖 General AI Assistant</p>
+                            <div className="w-3 h-3 bg-violet-500 rounded-full flex-shrink-0"></div>
+                            <p className="text-slate-700 dark:text-slate-300 font-semibold">General AI Assistant</p>
                           </div>
                         </div>
                       )}
                     </div>
                     {!isAuthenticated && (
-                      <div className="mt-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl" role="note" aria-label="Login benefits">
-                        <p className="text-yellow-800 dark:text-yellow-200 font-semibold text-sm">
-                          🔓 Login to unlock General AI mode, file uploads, and chat history!
+                      <div className="mt-6 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl" role="note" aria-label="Login benefits">
+                        <p className="text-amber-800 dark:text-amber-200 font-semibold text-sm">
+                          Login to unlock General AI mode, file uploads, and chat history!
                         </p>
                       </div>
                     )}
@@ -287,11 +304,11 @@ function App() {
           </main>
 
           {/* Input Area - Fixed at Bottom */}
-          <section role="region" aria-label="Message input" className="border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 flex-shrink-0">
+          <section role="region" aria-label="Message input" className="border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 flex-shrink-0">
             <ChatInput 
               onSend={handleSendMessage}
               isLoading={chatState.isLoading || !!error}
-              placeholder={`Ask about cement plant operations (${chatState.selectedRole} expertise)...`}
+              placeholder={`Ask about your EPC project or plant (${chatState.selectedRole} expertise)...`}
               onFileUpload={isAuthenticated ? handleFileUpload : undefined}
               uploadedFiles={chatState.uploadedFiles}
               onRemoveFile={isAuthenticated ? handleRemoveFile : undefined}
